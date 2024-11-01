@@ -1,0 +1,112 @@
+---
+import { Image, Picture } from "astro:assets";
+import Title from "src/components/Title.astro";
+import Layout from "src/layouts/Layout.astro";
+
+import post05Img from "@images/post-05.png";
+
+const title = "Imagenes";
+---
+
+<Layout {title}>
+  <Title>
+    {title}
+  </Title>
+
+  <img src="/assets/images/post-05.png" alt="test" width="100" height="100" />
+
+  <div class="flex flex-col gap-10">
+    <section>
+      <p>Quality: Low</p>
+      <Image
+        src={post05Img}
+        quality="low"
+        alt="test"
+        width="100"
+        height="100"
+      />
+    </section>
+
+    <section>
+      <p>Quality: Medium</p>
+      <Image
+        src={post05Img}
+        quality="mid"
+        alt="test"
+        width="100"
+        height="100"
+      />
+    </section>
+    <section>
+      <p>Quality: High</p>
+      <Image
+        src={post05Img}
+        quality="high"
+        alt="test"
+        width="100"
+        height="100"
+      />
+    </section>
+    <section>
+      <p>Quality: Max</p>
+      <Image
+        src={post05Img}
+        quality="max"
+        alt="test"
+        width="100"
+        height="100"
+      />
+    </section>
+    <section>
+      <p>Formatos: avif</p>
+      <Image
+        src={post05Img}
+        format="avif"
+        alt="test"
+        width="100"
+        height="100"
+      />
+    </section>
+    <section>
+      <p>Formatos: jpeg</p>
+      <Image
+        src={post05Img}
+        format="jpeg"
+        alt="test"
+        width="100"
+        height="100"
+      />
+    </section>
+    <section>
+      <p>Formatos: jpg</p>
+      <Image src={post05Img} format="jpg" alt="test" width="100" height="100" />
+    </section>
+    <section>
+      <p>Formatos: png</p>
+      <Image src={post05Img} format="png" alt="test" width="100" height="100" />
+    </section>
+    <section>
+      <p>Formatos: webp</p>
+      <Image
+        src={post05Img}
+        format="webp"
+        alt="test"
+        width="100"
+        height="100"
+      />
+    </section>
+    <section>
+      <p>Formatos: Varios formatos</p>
+      <Picture
+        src={post05Img}
+        formats={["avif", "webp", "png"]}
+        widths={[240, 540, 720, post05Img.width]}
+        sizes={`(max-width: 360px) 240px, (max-width: 768px) 540px, (max-width: 1624px) 720px, ${post05Img.width}px`}
+        alt="test"
+        width={400}
+        height={400}
+
+      />
+    </section>
+  </div>
+</Layout>
