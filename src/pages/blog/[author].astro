@@ -10,13 +10,13 @@ export const getStaticPaths = (async () => {
   const authors = await getCollection("author");
   const posts = await getCollection("blog");
 
-  return authors.map((author) => ({
+  return authors.map((author: CollectionEntry<'author'>) => ({
     params: {
       author: author.id,
     },
     props: {
       author,
-      authorPosts: posts.filter((post) => post.data.author.id === author.id),
+      authorPosts: posts.filter((post: CollectionEntry<'blog'>) => post.data.author.id === author.id),
     },
   }));
 }) satisfies GetStaticPaths;
