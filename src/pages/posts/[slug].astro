@@ -3,9 +3,10 @@ import type { GetStaticPaths } from "astro";
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import { Image } from "astro:assets";
+import { Image, Picture } from "astro:assets";
 import Title from "src/components/Title.astro";
 import { Formatter } from "@utils/formatter";
+import { getEntry } from "astro:content";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("blog");
@@ -26,29 +27,51 @@ interface Props {
 
 const { post } = Astro.props;
 
-const { title, date, description, image, author, tags } = post.data;
+const { title, date, description, image, tags } = post.data;
 
 const { Content, headings } = await post.render();
 
-console.log(headings);
+const author = await getEntry("author", post.data.author.id);
+
+const { name: authorName, avatar: authorAvatar } = author.data;
 ---
 
-<BlogLayout {title} >
+<BlogLayout {title}>
   <h1 class="text-xs text-gray-500 mb-0">{title}</h1>
-  <h4 class="text-md text-gray-400 mb-0 flex justify-between"><span>{author}</span> <span>{Formatter.formateDate(date)}</span></h4>
+  <h4
+    class="text-md text-gray-400 mb-0 flex justify-between items-center space-x-4 py-4"
+  >
+    <a
+      href={`/blog/${author.id}`}
+      class="flex items-center space-x-2 p-2 bg-gray-800 rounded-sm cursor-pointer"
+      transition:name={`author-profile${author.id}`}
+    >
+      <span class="font-semibold text-blue-500">{authorName}</span>
+      <Image
+        class="object-cover w-8 h-8 rounded-full border-2 border-blue-500"
+        src={authorAvatar}
+        width={32}
+        quality="low"
+        loading="lazy"
+        alt={authorName}
+      />
+    </a>
+    <span>{Formatter.formateDate(date)}</span>
+  </h4>
 
   <div class="prose dark:prose-dark max-w-none">
     <p>{description}</p>
   </div>
 
-  <Image
-    class="object-cover w-full h-[250px] my-5 rounded-md"
+  <Picture
+    class="object-cover w-full h-56 rounded-lg"
     src={image}
-    width={600}
-    quality="low"
+    widths={[768, 1920]}
+    sizes={`(min-width: 768px) 50vw, 100vw`}
+    quality="high"
     loading="lazy"
     alt={title}
-    transition:name=`blog-post-${title}`
+    transition:name={`blog-post-${post.data.title}`}
   />
 
   <!-- Tabla de contenido -->

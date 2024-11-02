@@ -1,0 +1,66 @@
+---
+import type { GetStaticPaths } from "astro";
+// Type GetStaticPaths de Astro
+import TypedBlogPost from "src/components/TypedBlogPost.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import Title from "src/components/Title.astro";
+
+const { page } = Astro.props;
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const blogPosts = await getCollection("blog");
+
+  return paginate(blogPosts, { pageSize: 2 });
+}) satisfies GetStaticPaths;
+
+const title = "pendiente";
+---
+
+<Layout {title}>
+  <section class="bg-white dark:bg-gray-900">
+    <div class="container px-6 py-10 mx-auto">
+      <Title>Blog Paginado</Title>
+      <a href="/" class="text-blue-500 hover:text-blue-700 underline p-4">
+        Inicio
+      </a>
+      <a href="/authors" class="text-blue-500 hover:text-blue-700 underline p-4">
+        Autores
+      </a>
+
+      <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
+        {page.data.map((post) => <TypedBlogPost {post} />)}
+      </div>
+
+      <section aria-label="Controles" class="flex justify-between mt-10">
+        <!--   page .. ?? prev   -->
+        <a
+          href={page.url.prev}
+          class="btn"
+          class:list={{
+            disabled: !page.url.prev,
+          }}>Anteriores</a
+        >
+
+        <!--   page .. ?? next   -->
+        <a
+          href={page.url.next}
+          class="btn"
+          class:list={{
+            disabled: !page.url.next,
+          }}>Siguientes</a
+        >
+      </section>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .btn {
+    @apply bg-blue-500 text-white p-2 rounded hover:bg-blue-600 cursor-pointer;
+  }
+
+  .disabled {
+    @apply bg-gray-600 hover:bg-gray-600;
+  }
+</style>

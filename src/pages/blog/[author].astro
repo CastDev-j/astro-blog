@@ -1,0 +1,73 @@
+---
+import type { GetStaticPaths } from "astro";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import TypedBlogPost from "src/components/TypedBlogPost.astro";
+import Layout from "src/layouts/Layout.astro";
+
+export const getStaticPaths = (async () => {
+  const authors = await getCollection("author");
+  const posts = await getCollection("blog");
+
+  return authors.map((author) => ({
+    params: {
+      author: author.id,
+    },
+    props: {
+      author,
+      authorPosts: posts.filter((post) => post.data.author.id === author.id),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  author: CollectionEntry<"author">;
+  authorPosts: CollectionEntry<"blog">[];
+}
+
+const { author, authorPosts } = Astro.props;
+
+console.log(authorPosts);
+
+const { avatar, name } = author.data;
+---
+
+<Layout title={name}>
+  <div
+    class="p-4 mx-4 bg-gray-800 rounded-b-sm shadow-lg"
+    transition:name={`author-profile${author.id}`}
+  >
+    <div class="flex items-center space-x-4 p-6">
+      <Image
+        class="object-cover w-24 h-24 rounded-full"
+        src={avatar}
+        width={96}
+        quality="high"
+        loading="lazy"
+        alt={name}
+      />
+      <h1 class="text-3xl font-bold">{name}</h1>
+    </div>
+    <div class="flex space-x-4 p-4">
+      <a href="/blog/1" class="text-blue-500 hover:text-blue-700 underline">
+        Blog Paginado
+      </a>
+      <a href="/" class="text-blue-500 hover:text-blue-700 underline">
+        Inicio
+      </a>
+      <a
+        href="/authors"
+        class="text-blue-500 hover:text-blue-700 underline"
+      >
+        Autores
+      </a>
+    </div>
+  </div>
+
+  <div
+    class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2 p-4 m-4 bg-gray-800 rounded-sm"
+  >
+    {authorPosts.map((post) => <TypedBlogPost {post} />)}
+  </div>
+</Layout>

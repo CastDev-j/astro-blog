@@ -3,6 +3,10 @@ html {
   @apply bg-gray-900 px-10;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   @apply mt-10;
 }

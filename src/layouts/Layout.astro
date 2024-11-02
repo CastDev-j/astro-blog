@@ -23,3 +23,9 @@ const { title } = Astro.props;
 		<slot />
 	</body>
 </html>
+
+<style is:global>
+	body::-webkit-scrollbar {
+	  display: none;
+	}
+  </style>

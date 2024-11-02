@@ -1,0 +1,58 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  author: CollectionEntry<"author">;
+}
+
+const { author } = Astro.props;
+
+const { name, avatar, bio, github, linkedIn, subtitle, twitter } = author.data;
+---
+
+<div
+  class="flex flex-col max-w-lg mx-auto rounded-lg shadow-md p-5 bg-gray-800"
+>
+<a
+    href={`blog/${author.id}`}
+    transition:name={`author-profile${author.id}`}
+    class="cursor-pointer flex flex-col items-center p-4 rounded-lg transition duration-300 hover:bg-gray-700"
+    title="Click to view more about the author"
+>
+    <Image
+        class="rounded-full mb-4"
+        src={avatar}
+        alt={name}
+        width={128}
+        quality="high"
+    />
+    <h2 class="text-2xl font-semibold text-gray-100">
+        {name}
+    </h2>
+    <p class="text-gray-300">{subtitle}</p>
+</a>
+  <div class="mt-2">
+    <div class="flex justify-center">
+      <a
+        href={twitter}
+        class="text-blue-500 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition mx-3"
+        >Twitter</a
+      >
+      <a
+        href={linkedIn}
+        class="text-blue-500 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition mx-3"
+        >LinkedIn</a
+      >
+      <a
+        href={github}
+        class="text-blue-500 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition mx-3"
+        >GitHub</a
+      >
+    </div>
+    <div class="mt-4">
+      <h3 class="text-xl font-semibold text-gray-100">Bio</h3>
+      <p class="mt-2 text-gray-300">{bio}</p>
+    </div>
+  </div>
+</div>

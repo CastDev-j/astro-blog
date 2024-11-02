@@ -8,7 +8,7 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
 const { post } = Astro.props;
-const { image, title, date } = post.data;
+const { image, title, date, description } = post.data;
  
 console.log(image.src);
 
@@ -31,7 +31,7 @@ console.log(image.src);
       href={`/posts/${post.slug}`}
       class="text-xl font-semibold text-gray-800 hover:underline dark:text-white"
     >
-      {title}
+      {description}
     </a>
 
     <span class="text-sm text-gray-500 dark:text-gray-300"

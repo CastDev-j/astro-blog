@@ -21,9 +21,19 @@ const { title } = Astro.props;
   </head>
   <body class="bg-gray-900 text-gray-100">
     <ViewTransitions />
-    <a id="goBack" href="/" class="decoration-transparent block w-full text-center my-4 py-4 bg-gray-800 text-white rounded-lg shadow-lg hover:bg-gray-700 transition-colors duration-300">Regresar</a>
+    <a
+      id="goBack"
+      href="/"
+      class="decoration-transparent block w-full text-center my-4 py-4 bg-gray-800 text-white rounded-lg shadow-lg hover:bg-gray-700 transition-colors duration-300"
+      >Regresar</a
+    >
     <slot />
-    <a href="#goBack" class="decoration-transparent block w-full text-center my-4 py-4 bg-gray-800 text-white rounded-lg shadow-lg hover:bg-gray-700 transition-colors duration-300">Ir arriba</a>
+    <a
+      href="#goBack"
+      class="decoration-transparent block w-full text-center my-4 py-4 bg-gray-800 text-white rounded-lg shadow-lg hover:bg-gray-700 transition-colors duration-300"
+      >Ir arriba</a
+    >
   </body>
 </html>
+
 

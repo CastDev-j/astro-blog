@@ -1,6 +1,6 @@
 
 
 export const siteConfig = {
-    title: 'My Special Blog',
+    title: 'Aprendiendo Astro Blog',
     description: 'This is my awesome blog',
 }
