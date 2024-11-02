@@ -1,5 +1,5 @@
 import { defineCollection, reference, z } from "astro:content";
-
+// z es una libreria de validacion de esquemas
 const blogCollection = defineCollection({
   type: "content",
   schema: ({ image }) =>
